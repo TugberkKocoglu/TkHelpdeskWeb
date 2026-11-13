@@ -1,75 +1,57 @@
-# React + TypeScript + Vite
+# TK Helpdesk Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+TK Helpdesk'in React ve TypeScript ile geliştirdiğim web arayüzü. Helpdesk kullanıcıları buradan destek taleplerini oluşturabiliyor, şirket ve kullanıcı bilgilerini yönetebiliyor. Çalışanlar ise kendi departmanlarına gelen talepleri sahiplenip süreçlerini takip edebiliyor.
 
-Currently, two official plugins are available:
+Anadizindeki docs klasörü altında ekran görüntülerini inceleyebilirsiniz.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Vite, React Query, Axios ve Socket.IO Client kullanılıyor.
 
-## React Compiler
+Diğer projeler: [API](https://github.com/TugberkKocoglu/TkHelpdeskApi) · [Mobile](https://github.com/TugberkKocoglu/TkHelpdeskMobile)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Kurulum
 
-## Expanding the ESLint configuration
+Windows 11'de Node.js 24.14.0 ile test ettim. Web uygulamasını açmadan önce [API projesindeki](https://github.com/TugberkKocoglu/TkHelpdeskApi) kurulumun tamamlanmış, PostgreSQL'in ve API'nin çalışıyor olması gerekiyor.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```powershell
+git clone https://github.com/TugberkKocoglu/TkHelpdeskWeb.git
+cd TkHelpdeskWeb
+npm ci
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Arayüz varsayılan olarak şu adreste açılıyor:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+http://localhost:5173
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+API ise `http://localhost:5218` adresinde çalışıyor. Giriş için API kurulumunda seed ile oluşturulan Helpdesk hesabını kullanabilirsiniz.
 
+> API tarafındaki CORS ayarı `http://localhost:5173` adresine göre yapıldı. Vite başka bir port açarsa önce 5173'ün başka bir işlem tarafından kullanılıp kullanılmadığına bakın.
+
+## Deneme akışı
+
+1. Helpdesk hesabıyla giriş yapın.
+2. Kullanıcılar ekranından Yazılım veya Yazılım Destek departmanına bir Employee kullanıcısı ekleyin.
+3. Firma ve departman seçerek yeni bir talep oluşturun.
+4. Employee hesabıyla giriş yapıp departman havuzundaki talebi sahiplenin, başlatın ve çözüm notuyla kapatın.
+5. Web ve mobil uygulama birlikte açıksa talep durumlarının Socket.IO üzerinden güncellenmesini kontrol edebilirsiniz.
+
+Dashboard, raporlar ve uygulama içi bildirimler de web tarafında bulunuyor.
+
+## Diğer komutlar
+
+```powershell
+npm run build
+npm run lint
 ```
+
+## Kurulum notları
+
+| Durum                       | Kontrol edilecek yer                                                                                                                                                   |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Girişte `Network Error`     | API'nin çalıştığını `http://localhost:5218/api/health` üzerinden kontrol edin.                                                                                         |
+| CORS uyarısı                | Web'in `http://localhost:5173` üzerinden açıldığını kontrol edin.                                                                                                      |
+| Hesapla giriş yapılamıyor   | API seed işleminde belirlenen kullanıcı bilgilerini kullanın.                                                                                                          |
+| `npm ci` güvenlik uyarıları | Windows denemesinde 10 orta seviye npm audit bulgusu vardı. Detayları `npm audit` ile görebilirsiniz; paketleri güncellemeden önce uyumluluğu kontrol etmek gerekiyor. |
+| Veri anlık güncellenmiyor   | API terminalindeki Socket.IO bağlantısını ve tarayıcı konsolunu kontrol edin.                                                                                          |
+
+Web projesi tek başına çalışabilir, ancak giriş ve veri işlemleri için API'ye ihtiyaç duyuyor.

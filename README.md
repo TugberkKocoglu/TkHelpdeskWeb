@@ -54,4 +54,27 @@ npm run lint
 | `npm ci` güvenlik uyarıları | Windows denemesinde 10 orta seviye npm audit bulgusu vardı. Detayları `npm audit` ile görebilirsiniz; paketleri güncellemeden önce uyumluluğu kontrol etmek gerekiyor. |
 | Veri anlık güncellenmiyor   | API terminalindeki Socket.IO bağlantısını ve tarayıcı konsolunu kontrol edin.                                                                                          |
 
-Web projesi tek başına çalışabilir, ancak giriş ve veri işlemleri için API'ye ihtiyaç duyuyor.
+TK Helpdesk Web projesinin main branch'inde bulunan gerçek sürümü, giriş ve veri işlemleri için Node.js API ve PostgreSQL bağlantısına ihtiyaç duyar. demo branch'inde bulunan Netlify sürümü ise örnek verilerle bağımsız çalışabilir.
+
+## Canlı Demo
+
+TK Helpdesk Web uygulamasının backend bağlantısı gerektirmeyen demo sürümü Netlify üzerinden yayınlanmıştır.
+
+**Canlı uygulama:** https://tkhelpdeskweb.netlify.app
+
+### Demo Giriş Bilgileri
+
+| Kullanıcı                | E-posta           | Şifre   |
+| ------------------------ | ----------------- | ------- |
+| Helpdesk                 | helpdesk@demo.com | demo123 |
+| Yazılım Destek Personeli | employee@demo.com | demo123 |
+| Yazılım Personeli (Ayşe) | ayse@example.com  | demo123 |
+
+### Demo Hakkında
+
+Demo sürümünde şirket ve kullanıcı yönetimi, talep oluşturma, talep üstlenme, başlatma, kapatma, dashboard ve raporlama ekranları test edilebilir.
+
+- Demo verileri tarayıcının `localStorage` alanında saklanır.
+- Yapılan işlemler gerçek PostgreSQL veritabanını etkilemez.
+- Demo kullanıcılarının giriş bilgileri yalnızca tanıtım amaçlıdır.
+- Gerçek backend bağlantısını kullanan uygulama `main` branch'inde, demo sürümü ise `demo` branch'inde tutulmaktadır.

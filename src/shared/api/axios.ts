@@ -1,10 +1,14 @@
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from "axios";
 
+import { demoAdapter } from "./demoAdapter";
+
 export const ACCESS_TOKEN_KEY = "tkhelpdesk_access_token";
 
 export const TOKEN_UPDATED_EVENT = "tkhelpdesk:token-updated";
 
 export const SESSION_EXPIRED_EVENT = "tkhelpdesk:session-expired";
+
+
 
 const BASE_URL =
   import.meta.env.VITE_API_BASE_URL ?? "http://localhost:5218/api";
@@ -165,3 +169,9 @@ api.interceptors.response.use(
     }
   },
 );
+
+// Yalnızca demo modunda örnek API yanıtlarını kullan.
+if (import.meta.env.VITE_DEMO_MODE === "true") {
+  api.defaults.adapter = demoAdapter;
+  authHttp.defaults.adapter = demoAdapter;
+}
